@@ -1,9 +1,16 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
+part 'note.g.dart';
 
-class Note {
+@HiveType(typeId: 0)
+class Note extends HiveObject {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String emoji;
+  @HiveField(2)
   final String content;
+  @HiveField(3)
   final DateTime dateTime;
 
   Note({
