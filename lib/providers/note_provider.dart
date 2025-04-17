@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:memo/models/note.dart';
-import 'package:uuid/uuid.dart';
 
 class NoteNotifier extends StateNotifier<List<Note>> {
   NoteNotifier() : super([]);
 
-  void addNote(String title, String content) {
-    final newNote = Note(id: Uuid().v4(), title: title, content: content);
+  void addNote(String emoji, String content, DateTime dateTime) {
+    final newNote = Note(emoji: emoji, content: content, dateTime: dateTime);
     state = [...state, newNote];
   }
 
-  void updateNote(String id, String title, String content) {
+  void updateNote(String emoji, String id, String content, DateTime dateTime) {
     state = state.map((note) {
       if (note.id == id) {
-        return note.copyWith(title: title, content: content);
+        return note.copyWith(
+            emoji: emoji, content: content, dateTime: dateTime);
       }
       return note;
     }).toList();
