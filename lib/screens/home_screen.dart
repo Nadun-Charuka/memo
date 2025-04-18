@@ -51,6 +51,7 @@ class HomeScreen extends ConsumerWidget {
         child: Column(
           children: [
             SearchbarWidget(),
+            Divider(),
             SizedBox(
               height: 16,
             ),
