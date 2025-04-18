@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:memo/providers/theme_provider.dart';
 
 class SettingScreen extends ConsumerWidget {
@@ -12,7 +13,13 @@ class SettingScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Themed App"),
+        title: Text(
+          "Profile",
+          style: GoogleFonts.dancingScript(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
@@ -22,12 +29,7 @@ class SettingScreen extends ConsumerWidget {
           )
         ],
       ),
-      body: Center(
-        child: Text(
-          'Current Theme: ${isDark ? "Dark" : "Light"}',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
+      body: Center(),
     );
   }
 }
