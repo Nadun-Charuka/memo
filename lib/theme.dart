@@ -20,6 +20,9 @@ class MyAppThemes {
     cardTheme: CardTheme(
       color: lightCard,
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: primaryPink,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: primaryPink,
       foregroundColor: Colors.white,
@@ -55,6 +58,9 @@ class MyAppThemes {
     cardTheme: CardTheme(
       color: darkCard,
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: primaryPink.withValues(alpha: 0.6),
+    ),
 
     appBarTheme: AppBarTheme(
       backgroundColor: Color(0xFF2C2A32),
@@ -63,7 +69,7 @@ class MyAppThemes {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryPink,
+        backgroundColor: primaryPink.withValues(alpha: 0.6),
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),

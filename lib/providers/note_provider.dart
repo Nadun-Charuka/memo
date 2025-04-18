@@ -2,6 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memo/models/note.dart';
 
+final noteProvider =
+    StateNotifierProvider<NoteNotifier, List<Note>>((ref) => NoteNotifier());
+
 class NoteNotifier extends StateNotifier<List<Note>> {
   late Box<Note> _noteBox;
   NoteNotifier() : super([]) {
@@ -10,7 +13,9 @@ class NoteNotifier extends StateNotifier<List<Note>> {
   }
 
   void loadNotes() {
-    state = _noteBox.values.toList();
+    final allNotes = _noteBox.values.toList();
+    allNotes.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+    state = allNotes;
   }
 
   void addNote(String emoji, String content, DateTime dateTime) {
@@ -34,6 +39,3 @@ class NoteNotifier extends StateNotifier<List<Note>> {
     loadNotes();
   }
 }
-
-final noteProvider =
-    StateNotifierProvider<NoteNotifier, List<Note>>((ref) => NoteNotifier());

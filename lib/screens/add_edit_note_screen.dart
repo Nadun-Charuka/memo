@@ -15,7 +15,7 @@ class AddEditNoteScreen extends ConsumerStatefulWidget {
 class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
   final _contentController = TextEditingController();
   late String selectedImoji = "😍";
-  List<String> items = ['😍', '😡', '🥹', '😁', '🤔'];
+  List<String> items = ['😍', '😁', '🤔', '😡', '😭', '🤮'];
   @override
   void initState() {
     super.initState();
@@ -62,7 +62,7 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                     });
                   },
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Colors.blue.shade100
