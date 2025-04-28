@@ -14,13 +14,15 @@ class AddEditNoteScreen extends ConsumerStatefulWidget {
 
 class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
   final _contentController = TextEditingController();
+  final _dateTimeController = TextEditingController();
   late String selectedImoji = "😍";
-  List<String> items = ['😍', '😁', '🤔', '😡', '😭', '🤮'];
+  List<String> items = ['😍', '😁', '🥺', '🤔', '😡', '😭', '🤮'];
   @override
   void initState() {
     super.initState();
     if (widget.note != null) {
       _contentController.text = widget.note!.content;
+      _dateTimeController.text = widget.note!.dateTime.toString();
       selectedImoji = widget.note!.emoji;
     }
   }
@@ -85,38 +87,52 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
               SizedBox(
                 height: 10,
               ),
-              TextField(
-                decoration: InputDecoration(
-                    labelText: "Set the Memo Date Manually",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    final content = _contentController.text.trim();
-
-                    if (content.isNotEmpty) {
-                      if (isEditing) {
-                        ref.read(noteProvider.notifier).updateNote(
-                            selectedImoji,
-                            widget.note!.id,
-                            content,
-                            DateTime.now());
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        child: TextField(
+                          controller: _dateTimeController,
+                          decoration: InputDecoration(
+                              fillColor: Colors.transparent,
+                              labelText: "Set date manually",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      final content = _contentController.text.trim();
+                      if (content.isNotEmpty) {
+                        if (isEditing) {
+                          ref.read(noteProvider.notifier).updateNote(
+                              selectedImoji,
+                              widget.note!.id,
+                              content,
+                              DateTime.now());
+                        } else {
+                          ref
+                              .read(noteProvider.notifier)
+                              .addNote(selectedImoji, content, DateTime.now());
+                        }
                       } else {
-                        ref
-                            .read(noteProvider.notifier)
-                            .addNote(selectedImoji, content, DateTime.now());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Enter title and content")));
                       }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Enter title and content")));
-                    }
-                    Navigator.pop(context);
-                  },
-                  child: Text(isEditing ? "Edit" : "Add"))
+                      Navigator.pop(context);
+                    },
+                    child: Text(isEditing ? "Edit" : "Add"),
+                  ),
+                ],
+              )
             ],
           ),
         ),

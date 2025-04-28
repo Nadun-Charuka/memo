@@ -20,6 +20,9 @@ class MyAppThemes {
     cardTheme: CardTheme(
       color: lightCard,
     ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: lightCard,
+    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryPink,
     ),
@@ -57,6 +60,9 @@ class MyAppThemes {
     primaryColor: primaryPink,
     cardTheme: CardTheme(
       color: darkCard,
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: darkCard,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryPink.withValues(alpha: 0.6),

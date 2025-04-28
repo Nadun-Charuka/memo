@@ -10,7 +10,7 @@ class SearchbarWidget extends ConsumerWidget {
     final selectedEmoji = ref.watch(selectedEmojiProvider);
     final selectedDate = ref.watch(selectedDateProvider);
 
-    final emojis = ['😍', '😁', '🤔', '😡', '😭', '🤮'];
+    final emojis = ['😍', '😁', '🥺', '🤔', '😡', '😭', '🤮'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +37,7 @@ class SearchbarWidget extends ConsumerWidget {
               final isSelected = selectedEmoji == emoji;
 
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: GestureDetector(
                   onTap: () {
                     ref.read(selectedEmojiProvider.notifier).state =

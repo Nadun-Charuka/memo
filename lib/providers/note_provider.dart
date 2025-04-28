@@ -31,6 +31,7 @@ class NoteNotifier extends StateNotifier<List<Note>> {
           note.copyWith(content: content, emoji: emoji, dateTime: dateTime);
 
       _noteBox.put(id, updated);
+      loadNotes();
     }
   }
 

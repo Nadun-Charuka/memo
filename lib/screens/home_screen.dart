@@ -63,66 +63,130 @@ class HomeScreen extends ConsumerWidget {
                 itemCount: notes.length,
                 itemBuilder: (context, index) {
                   final note = notes[index];
-                  return Card(
-                    //color: Color(0xFF3A3A3A),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                note.emoji,
-                                style: TextStyle(fontSize: 24),
+                  return GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: SingleChildScrollView(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Spacer(
+                                        flex: 10,
+                                      ),
+                                      Text(
+                                        note.emoji,
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                      Spacer(
+                                        flex: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  AddEditNoteScreen(note: note),
+                                            ),
+                                          );
+                                        },
+                                        child: Icon(Icons.edit),
+                                      ),
+                                      Spacer(
+                                        flex: 2,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(noteProvider.notifier)
+                                              .deleteNote(note.id);
+
+                                          Navigator.pop(context);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content:
+                                                      Text('Memo deleted')));
+                                        },
+                                        child: Icon(Icons.delete, size: 20),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(note.content),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        DateFormat("dd-MM-yyyy  hh:mm a")
+                                            .format(note.dateTime),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("close"),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Spacer(
-                                flex: 3,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          AddEditNoteScreen(note: note),
-                                    ),
-                                  );
-                                },
-                                child: Icon(Icons.edit),
-                              ),
-                              Spacer(
-                                flex: 1,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  ref
-                                      .read(noteProvider.notifier)
-                                      .deleteNote(note.id);
-                                },
-                                child: Icon(Icons.delete, size: 20),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            maxLines: 15,
-                            overflow: TextOverflow.ellipsis,
-                            note.content,
-                            style: GoogleFonts.lora(
-                              fontSize: 16,
                             ),
                           ),
-                          Text(
-                            DateFormat("dd-MM-yyyy").format(note.dateTime),
-                            //note.dateTime.toString(),
-                            style: TextStyle(fontSize: 10),
-                          ),
-                        ],
+                        ),
+                      );
+                    },
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  note.emoji,
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              note.content,
+                              style: GoogleFonts.lora(
+                                fontSize: 16,
+                              ),
+                              maxLines: 15,
+                              overflow: TextOverflow.fade,
+                            ),
+                            Text(
+                              DateFormat("dd-MM-yyyy").format(note.dateTime),
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
