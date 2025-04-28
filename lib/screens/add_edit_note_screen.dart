@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:memo/models/note.dart';
 import 'package:memo/providers/note_provider.dart';
 
@@ -13,6 +14,7 @@ class AddEditNoteScreen extends ConsumerStatefulWidget {
 }
 
 class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
+  DateTime? selectedDate;
   final _contentController = TextEditingController();
   final _dateTimeController = TextEditingController();
   late String selectedImoji = "😍";
@@ -22,13 +24,40 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
     super.initState();
     if (widget.note != null) {
       _contentController.text = widget.note!.content;
-      _dateTimeController.text = widget.note!.dateTime.toString();
+      selectedDate = widget.note!.dateTime;
+      _dateTimeController.text =
+          DateFormat("dd-MM-yyyy").format(widget.note!.dateTime);
       selectedImoji = widget.note!.emoji;
+    } else {
+      selectedDate = DateTime.now();
+      _dateTimeController.text =
+          DateFormat("dd-MM-yyyy").format(DateTime.now());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<void> dateTimePicker() async {
+      DateTime? date = await showDatePicker(
+        context: context,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+      );
+
+      if (date == null) return;
+
+      final DateTime dateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+      );
+
+      setState(() {
+        selectedDate = DateTime(date.year, date.month, date.day);
+        _dateTimeController.text = DateFormat("dd-MM-yyyy").format(dateTime);
+      });
+    }
+
     final isEditing = widget.note != null;
 
     return Scaffold(
@@ -95,12 +124,16 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                       SizedBox(
                         width: 250,
                         child: TextField(
+                          readOnly: true,
                           controller: _dateTimeController,
                           decoration: InputDecoration(
-                              fillColor: Colors.transparent,
-                              labelText: "Set date manually",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
+                            fillColor: Colors.transparent,
+                            labelText: "Set date manually",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onTap: dateTimePicker,
                         ),
                       ),
                     ],
@@ -117,11 +150,11 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                               selectedImoji,
                               widget.note!.id,
                               content,
-                              DateTime.now());
+                              selectedDate!);
                         } else {
                           ref
                               .read(noteProvider.notifier)
-                              .addNote(selectedImoji, content, DateTime.now());
+                              .addNote(selectedImoji, content, selectedDate!);
                         }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
