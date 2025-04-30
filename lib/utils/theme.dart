@@ -13,6 +13,7 @@ class MyAppThemes {
   static const Color darkCard = Color(0xFF3A3A3A); // Soft surface
   static const Color darkText = Color(0xFFECECEC); // Bright text
 
+//light theme
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: lightBackground,
@@ -57,6 +58,7 @@ class MyAppThemes {
     ),
   );
 
+//dark theme
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Color(0xFF1C1B1F), // Deep romantic night

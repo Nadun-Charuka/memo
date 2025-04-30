@@ -7,6 +7,7 @@ import 'package:memo/providers/filterd_note_provider.dart';
 import 'package:memo/providers/note_provider.dart';
 import 'package:memo/screens/add_edit_note_screen.dart';
 import 'package:memo/screens/setting_screen.dart';
+
 import 'package:memo/widgets/searchbar_widget.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -151,6 +152,7 @@ class HomeScreen extends ConsumerWidget {
                                             ref
                                                 .read(noteProvider.notifier)
                                                 .deleteNote(note.id);
+                                            if (!context.mounted) return;
 
                                             Navigator.pop(context);
                                             ScaffoldMessenger.of(context)
