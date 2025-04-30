@@ -17,7 +17,7 @@ class SearchbarWidget extends ConsumerWidget {
         // Search Field
         TextField(
           decoration: InputDecoration(
-            hintText: 'Search by emoji or content...',
+            hintText: 'Search by content, emoji or date...',
             prefixIcon: Icon(Icons.search),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
@@ -46,7 +46,9 @@ class SearchbarWidget extends ConsumerWidget {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.blue : Colors.grey[200],
+                      color: isSelected
+                          ? Colors.pinkAccent.withValues(alpha: 0.3)
+                          : Colors.grey[200],
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(

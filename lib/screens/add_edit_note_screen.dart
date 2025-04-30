@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:memo/models/note.dart';
 import 'package:memo/providers/note_provider.dart';
@@ -62,7 +63,13 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing ? "Edit Memo" : "Add Memo"),
+        title: Text(
+          isEditing ? "Edit Memo" : "Add Memo",
+          style: GoogleFonts.dancingScript(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -77,7 +84,9 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                 maxLines: 15,
                 controller: _contentController,
                 decoration: InputDecoration(
-                    label: Text("Memo"), alignLabelWithHint: true),
+                  label: Text("Memo"),
+                  alignLabelWithHint: true,
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -97,11 +106,13 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? Colors.blue.shade100
+                            ? Colors.pink.shade100
                             : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isSelected ? Colors.blue : Colors.transparent,
+                          color: isSelected
+                              ? Colors.pinkAccent.withValues(alpha: 0.9)
+                              : Colors.transparent,
                           width: 2,
                         ),
                       ),
@@ -114,7 +125,7 @@ class _AddEditNoteScreenState extends ConsumerState<AddEditNoteScreen> {
                 }).toList(),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Row(
                 children: [

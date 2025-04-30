@@ -33,7 +33,9 @@ class HomeScreen extends ConsumerWidget {
             Text(
               " Memo – Save the feels.",
               style: GoogleFonts.dancingScript(
-                  fontWeight: FontWeight.bold, fontSize: 25),
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
           ],
         ),
@@ -103,24 +105,69 @@ class HomeScreen extends ConsumerWidget {
                                             ),
                                           );
                                         },
-                                        child: Icon(Icons.edit),
+                                        child: Icon(
+                                          Icons.edit,
+                                        ),
                                       ),
                                       Spacer(
                                         flex: 2,
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          ref
-                                              .read(noteProvider.notifier)
-                                              .deleteNote(note.id);
+                                        onTap: () async {
+                                          bool? confirmDelete =
+                                              await showDialog<bool>(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Delete Memo?'),
+                                                content: Text(
+                                                    'Are you sure you want to delete this memo?'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, false);
+                                                    },
+                                                    child: Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        color: Colors.redAccent,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, true);
+                                                    },
+                                                    child: Text('Yes'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
 
-                                          Navigator.pop(context);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content:
-                                                      Text('Memo deleted')));
+                                          if (confirmDelete == true) {
+                                            ref
+                                                .read(noteProvider.notifier)
+                                                .deleteNote(note.id);
+
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                backgroundColor: Colors
+                                                    .redAccent
+                                                    .withValues(alpha: 0.4),
+                                                content: Text('Memo deleted'),
+                                              ),
+                                            );
+                                          }
                                         },
-                                        child: Icon(Icons.delete, size: 20),
+                                        child: Icon(
+                                          Icons.delete,
+                                          size: 20,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -180,6 +227,9 @@ class HomeScreen extends ConsumerWidget {
                               ),
                               maxLines: 15,
                               overflow: TextOverflow.fade,
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             Text(
                               DateFormat("dd-MM-yyyy").format(note.dateTime),

@@ -51,6 +51,9 @@ class MyAppThemes {
         borderSide: BorderSide(color: primaryPink, width: 2),
       ),
       labelStyle: TextStyle(color: textMuted),
+      hintStyle: TextStyle(
+        color: Colors.black38,
+      ),
     ),
   );
 
@@ -93,6 +96,9 @@ class MyAppThemes {
         borderSide: BorderSide(color: primaryPink, width: 2),
       ),
       labelStyle: TextStyle(color: textMuted),
+      hintStyle: TextStyle(
+        color: Colors.white30,
+      ),
     ),
   );
 }
